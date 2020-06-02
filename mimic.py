@@ -43,11 +43,22 @@ def create_mimic_dict(filename):
                 "who" : ["knows"]
             }
     """
-    # +++your code here+++
-    pass
+    wordinary = {"" : []}
+    with open('alice.txt') as f:
+        wordlist = f.read().split()
+        for index, word in enumerate(wordlist):
+            if word == wordlist[0]:
+                wordinary[""] = word
+            if word != wordlist[-1]:
+                if word in wordinary:
+                    wordinary[word].append(wordlist[index + 1])
+                if not word in wordinary:
+                    wordinary[word] = [wordlist[index + 1]]
+        return wordinary
+                    
 
 
-def print_mimic(mimic_dict, start_word):
+def print_mimic(mimic_dict, word):
     """Given a previously created mimic_dict and start_word,
     prints 200 random words from mimic_dict as follows:
         - Print the start_word
@@ -55,8 +66,14 @@ def print_mimic(mimic_dict, start_word):
         - Randomly select a new word from the next-list
         - Repeat this process 200 times
     """
-    # +++your code here+++
+    for i in range(200):
+       print(word, end=" ")
+       _next = mimic_dict[word]
+       if not _next:
+           _next = mimic_dict['']
+       word = random.choice(_next)
     pass
+
 
 
 # Provided main(), calls mimic_dict() and print_mimic()
@@ -67,7 +84,7 @@ def main():
 
     d = create_mimic_dict(sys.argv[1])
     print_mimic(d, '')
-
+  
 
 if __name__ == '__main__':
     main()
