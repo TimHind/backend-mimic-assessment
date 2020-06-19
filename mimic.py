@@ -43,17 +43,18 @@ def create_mimic_dict(filename):
                 "who" : ["knows"]
             }
     """
-    wordinary = {"" : []}
-    with open('alice.txt') as f:
+    wordinary = {}
+    with open(filename) as f:
         wordlist = f.read().split()
         for index, word in enumerate(wordlist):
             if word == wordlist[0]:
-                wordinary[""] = word
+                wordinary.update({"": [word]})
             if word != wordlist[-1]:
                 if word in wordinary:
                     wordinary[word].append(wordlist[index + 1])
                 if not word in wordinary:
                     wordinary[word] = [wordlist[index + 1]]
+            
         return wordinary
                     
 
@@ -68,12 +69,11 @@ def print_mimic(mimic_dict, word):
     """
     for i in range(200):
        print(word, end=" ")
-       _next = mimic_dict[word]
+       _next = mimic_dict.get(word)
        if not _next:
            _next = mimic_dict['']
        word = random.choice(_next)
-    pass
-
+    
 
 
 # Provided main(), calls mimic_dict() and print_mimic()
